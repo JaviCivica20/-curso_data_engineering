@@ -1,8 +1,7 @@
 version: 2
 
 sources:
-
-  - name: sql_server_dbo # name of the source 
+  - name: sql_server_dbo # name of the source
     schema: sql_server_dbo # this is the schema our raw data lives in
     database: ALUMNO20DEVBRONZEDB # this is the name of our database
 
@@ -12,11 +11,10 @@ sources:
       identifier: false
 
     freshness:
-      warn_after: {count: 24, period: hour}
-      error_after: {count: 48, period: hour}
+      warn_after: { count: 24, period: hour }
+      error_after: { count: 48, period: hour }
 
     tables:
-
       - name: addresses
         loaded_at_field: _fivetran_synced
         columns:
