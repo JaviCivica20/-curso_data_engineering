@@ -37,9 +37,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   curso_data_eng:
-    # Applies to all files under models/example/
-    example:
-      +materialized: view
     staging:
       +materialized: view
     marts:
