@@ -1,33 +1,31 @@
-
 WITH src_orders AS (
-    SELECT * 
+    SELECT *
     FROM {{ source('sql_server_dbo', 'orders') }}
-    ), 
+),
 
 renamed_casted AS (
     SELECT
-          order_id,
+        order_id,
         --, CASE WHEN shipping_service = '' then null
-         --   ELSE shipping_service END AS shipping_service 
-          created_at,
-          user_id,
-          address_id,
-          
-          CASE WHEN promo_id = '' then md5('no promo')
-            ELSE md5(promo_id) END AS promo_id,
+        --   ELSE shipping_service END AS shipping_service 
+        created_at,
+        user_id,
+        address_id,
+        order_total,
         --, estimated_delivery_at
-            order_total,
-            order_cost,
-            shipping_cost,
-            
-            
+        order_cost,
+        shipping_cost,
+        status,
         --, delivered_at
         --, CASE WHEN tracking_id = '' then null
         --    ELSE tracking_id END AS tracking_id
-            status
-        , coalesce(_fivetran_deleted, false) AS date_deleted
-        , convert_timezone('UTC',_fivetran_synced) AS date_load
+        CASE
+            WHEN promo_id = '' THEN md5('no promo')
+            ELSE md5(promo_id)
+        END AS promo_id,
+        coalesce(_fivetran_deleted, false) AS date_deleted,
+        convert_timezone('UTC', _fivetran_synced) AS date_load
     FROM src_orders
-    )
+)
 
 SELECT * FROM renamed_casted
