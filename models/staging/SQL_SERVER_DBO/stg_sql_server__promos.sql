@@ -24,7 +24,7 @@ new_row as (
         0 as discount_dollars,  
         1 as status_id,  
         false as date_deleted, 
-        null as date_load_UTC  
+        convert_timezone('UTC', current_timestamp()) as date_load_UTC  
 )
 
 SELECT * FROM renamed_casted
