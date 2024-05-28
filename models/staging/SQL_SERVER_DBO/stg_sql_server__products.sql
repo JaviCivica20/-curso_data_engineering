@@ -9,8 +9,8 @@ renamed_casted AS (
         , price
         , name
         , inventory
-        , _fivetran_deleted AS date_deleted
-        , _fivetran_synced AS date_load
+        , coalesce(_fivetran_deleted, false) AS date_deleted
+        , convert_timezone('UTC',_fivetran_synced) AS date_load
     FROM src_products
     )
 

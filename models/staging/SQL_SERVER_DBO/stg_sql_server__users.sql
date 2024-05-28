@@ -14,8 +14,8 @@ renamed_casted AS (
         , total_orders
         , first_name
         , email
-        , _fivetran_deleted AS date_deleted
-        , _fivetran_synced AS date_load
+        , coalesce(_fivetran_deleted, false) AS date_deleted
+        , convert_timezone('UTC',_fivetran_synced) AS date_load
     FROM src_users
     )
 
