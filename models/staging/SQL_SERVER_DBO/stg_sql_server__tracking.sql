@@ -6,7 +6,6 @@ WITH src_orders AS (
 tracking AS (
     SELECT  
         tracking_id,
-        shipping_cost,
         shipping_service,
         delivered_at,
         estimated_delivery_at

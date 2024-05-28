@@ -9,7 +9,7 @@ renamed_casted AS (
           order_id,
         --, CASE WHEN shipping_service = '' then null
          --   ELSE shipping_service END AS shipping_service 
-        --, shipping_cost
+         shipping_cost,
         address_id
         , created_at
         , CASE WHEN promo_id = '' then md5('no promo')
