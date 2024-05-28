@@ -6,11 +6,11 @@ WITH src_addresses AS (
 
 renamed_casted AS (
     SELECT
-          address_id::varchar(50)
-        , zipcode::number(5,0)
-        , country::varchar(50)
-        , address::varchar(50)
-        , state::varchar(50)
+          address_id
+        , zipcode
+        , country
+        , address
+        , state
         , _fivetran_deleted AS date_deleted
         , _fivetran_synced AS date_load
     FROM src_addresses

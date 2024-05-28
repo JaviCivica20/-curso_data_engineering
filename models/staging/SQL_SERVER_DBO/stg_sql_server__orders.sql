@@ -2,13 +2,7 @@
 WITH src_orders AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'orders') }}
-    ),
-
-
-promos AS (    
-    SELECT promo_id
-    FROM {{ source('sql_server_dbo', 'promos') }}
-),
+    ), 
 
 renamed_casted AS (
     SELECT
@@ -17,8 +11,8 @@ renamed_casted AS (
         , shipping_cost
         , address_id
         , created_at
-        , CASE WHEN b.promo_id is null then md5('Sin promocion')
-            ELSE md5(b.promo_id) END AS promo_id
+        , CASE WHEN promo_id = '' then md5('sin promocion')
+            ELSE md5(promo_id) END AS promo_id
         , estimated_delivery_at
         , order_cost
         , user_id
@@ -28,9 +22,7 @@ renamed_casted AS (
         , status
         , _fivetran_deleted AS date_deleted
         , _fivetran_synced AS date_load
-    FROM src_orders a
-    LEFT JOIN promos b
-    ON a.promo_id = b.promo_id
+    FROM src_orders
     )
 
 SELECT * FROM renamed_casted
