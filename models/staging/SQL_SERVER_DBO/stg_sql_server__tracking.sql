@@ -11,7 +11,7 @@ tracking AS (
         estimated_delivery_at
 
     FROM src_orders
-    WHERE delivered_at IS NOT NULL AND estimated_delivery_at IS NOT NULL
+    WHERE estimated_delivery_at IS NOT NULL
 )
 
 SELECT * FROM tracking
