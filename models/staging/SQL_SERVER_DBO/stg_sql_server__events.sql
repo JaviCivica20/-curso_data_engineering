@@ -9,6 +9,7 @@ renamed_casted AS (
           event_id,
           page_url,
           event_type,
+          md5(event_type) as event_type_id,
           user_id,
           NULLIF( product_id , '' ) AS product_id ,
           session_id,

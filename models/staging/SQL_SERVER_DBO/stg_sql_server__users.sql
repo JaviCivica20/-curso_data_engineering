@@ -20,7 +20,7 @@ renamed_casted AS (
           email,
           coalesce(b.total_orders, 0),
           address_id,
-          coalesce (regexp_like(email, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')= true,false) as is_valid_email_address,
+          --coalesce (regexp_like(email, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')= true,false) as is_valid_email_address,
           convert_timezone('UTC',updated_at) as updated_at_utc,
           convert_timezone('UTC',created_at) as created_at_utc,
           coalesce(_fivetran_deleted, false) AS date_deleted,
