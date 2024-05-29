@@ -58,7 +58,6 @@ final AS (
         product_id,
         promo_id,
         time_id,
-        order_id,
         quantity,
         order_cost,
         order_total,
