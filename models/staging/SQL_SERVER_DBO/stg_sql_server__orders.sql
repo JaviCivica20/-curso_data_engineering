@@ -15,7 +15,11 @@ renamed_casted AS (
         --, estimated_delivery_at
         order_cost as order_cost_dollars,
         shipping_cost as shipping_cost_dollars,
-        status,
+        CASE 
+            WHEN status LIKE 'preparing' then 0
+            WHEN status LIKE 'shipped' then 1
+            WHEN status LIKE 'delivered' then 2
+        END AS status_id,
         --convert_timezone('UTC',delivered_at) as delivered_at_utc,
         --CASE WHEN tracking_id = '' then null,
         --  ELSE tracking_id END AS tracking_id,
