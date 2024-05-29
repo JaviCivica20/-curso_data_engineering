@@ -8,7 +8,7 @@ renamed_casted AS (
         order_id,
         --, CASE WHEN shipping_service = '' then null
         --   ELSE shipping_service END AS shipping_service 
-        created_at,
+        convert_timezone('UTC',created_at) as created_at_utc,
         user_id,
         address_id,
         order_total,
@@ -16,9 +16,9 @@ renamed_casted AS (
         order_cost,
         shipping_cost,
         status,
-        --, delivered_at
-        --, CASE WHEN tracking_id = '' then null
-        --    ELSE tracking_id END AS tracking_id
+        --convert_timezone('UTC',delivered_at) as delivered_at_utc,
+        --CASE WHEN tracking_id = '' then null,
+        --  ELSE tracking_id END AS tracking_id,
         CASE
             WHEN promo_id = '' THEN md5('no promo')
             ELSE md5(promo_id)
