@@ -1,3 +1,17 @@
 WITH sales AS (
-    SELECT * FROM
+    SELECT * 
+    FROM
+),
+
+
+
+
+
+final AS (
+    SELECT
+
+
+    FROM sales
 )
+
+SELECT * FROM final
