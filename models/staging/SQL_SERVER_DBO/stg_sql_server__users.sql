@@ -7,7 +7,7 @@ user_orders AS (
     SELECT  
         user_id,
         count(*) as total_orders
-    FROM {{ source('sql_server_dbo', 'orders') }}
+    FROM {{ ref('base_sql_server__orders') }}
     GROUP BY user_id
 ),
 
