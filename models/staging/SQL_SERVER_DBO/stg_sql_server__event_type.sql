@@ -4,9 +4,10 @@ WITH src_events AS (
     ),
 
 type AS (
-    SELECT
-     md5(event_type) as event_type_id,
+    SELECT DISTINCT
+     event_type_id,
      event_type
+     FROM src_events
 )
 
 SELECT * FROM type
