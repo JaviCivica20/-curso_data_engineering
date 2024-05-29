@@ -1,16 +1,15 @@
 WITH src_promos AS (
-    SELECT status
-    FROM {{ source('sql_server_dbo', 'promos') }}
+    SELECT status_id
+    FROM {{ref('stg_sql_server__promos')}}
     ),
 
 dim_status AS (
     SELECT DISTINCT
+        status_id,
         CASE   
-            WHEN status LIKE 'active' then 1
-            WHEN status LIKE 'inactive' then 0
-            END AS status_id,
-        status
-
+            WHEN status_id = 1 then 'active'
+            WHEN status_id = 0 then 'inactive'
+            END status,
     FROM src_promos
 )
 

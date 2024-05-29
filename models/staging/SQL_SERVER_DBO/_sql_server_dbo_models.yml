@@ -2,81 +2,279 @@ version: 2
 
 models:
   - name: stg_sql_server__addresses
+    description: ""
     columns:
       - name: address_id
+        data_type: varchar
+        description: ""
+
       - name: zipcode
+        data_type: number
+        description: ""
+
       - name: country
+        data_type: varchar
+        description: ""
+
       - name: address
+        data_type: varchar
+        description: ""
+
       - name: state
+        data_type: varchar
+        description: ""
+
       - name: date_deleted
+        data_type: boolean
+        description: ""
+
       - name: date_load
+        data_type: timestamp_tz
+        description: ""
 
   - name: stg_sql_server__events
+    description: ""
     columns:
       - name: event_id
+        data_type: varchar
+        description: ""
+
       - name: page_url
+        data_type: varchar
+        description: ""
+
       - name: event_type
+        data_type: varchar
+        description: ""
+
       - name: user_id
+        data_type: varchar
+        description: ""
+
       - name: product_id
+        data_type: varchar
+        description: ""
+
       - name: session_id
-      - name: created_at
+        data_type: varchar
+        description: ""
+
+      - name: convert_timezone('utc', created_at)
+        data_type: timestamp_tz
+        description: ""
+
       - name: order_id
+        data_type: varchar
+        description: ""
+
       - name: date_deleted
+        data_type: boolean
+        description: ""
+
       - name: date_load
+        data_type: timestamp_tz
+        description: ""
 
   - name: stg_sql_server__orders
+    description: ""
     columns:
       - name: order_id
-      - name: shipping_service
-      - name: shipping_cost
-      - name: address_id
-      - name: created_at
-      - name: promo_id
-      - name: estimated_delivery_at
-      - name: order_cost
+        data_type: varchar
+        description: ""
+
+      - name: created_at_utc
+        data_type: timestamp_tz
+        description: ""
+
       - name: user_id
-      - name: order_total
-      - name: delivered_at
-      - name: tracking_id
+        data_type: varchar
+        description: ""
+
+      - name: address_id
+        data_type: varchar
+        description: ""
+
+      - name: order_total_dollars
+        data_type: float
+        description: ""
+
+      - name: order_cost_dollars
+        data_type: float
+        description: ""
+
+      - name: shipping_cost_dollars
+        data_type: float
+        description: ""
+
       - name: status
+        data_type: varchar
+        description: ""
+
+      - name: promo_id
+        data_type: varchar
+        description: ""
+
       - name: date_deleted
+        data_type: boolean
+        description: ""
+
       - name: date_load
+        data_type: timestamp_tz
+        description: ""
 
   - name: stg_sql_server__order_items
+    description: ""
     columns:
       - name: order_id
+        data_type: varchar
+        description: ""
+
       - name: product_id
+        data_type: varchar
+        description: ""
+
       - name: quantity
+        data_type: number
+        description: ""
+
       - name: date_deleted
+        data_type: boolean
+        description: ""
+
       - name: date_load
+        data_type: timestamp_tz
+        description: ""
 
   - name: stg_sql_server__products
+    description: ""
     columns:
       - name: product_id
-      - name: price
+        data_type: varchar
+        description: ""
+
+      - name: price_dollars
+        data_type: float
+        description: ""
+
       - name: name
+        data_type: varchar
+        description: ""
+
       - name: inventory
+        data_type: number
+        description: ""
+
       - name: date_deleted
+        data_type: boolean
+        description: ""
+
       - name: date_load
+        data_type: timestamp_tz
+        description: ""
 
   - name: stg_sql_server__promos
+    description: ""
     columns:
       - name: promo_id
-      - name: discount
-      - name: status
+        data_type: varchar
+        description: ""
+
+      - name: promo_name
+        data_type: varchar
+        description: ""
+
+      - name: discount_dollars
+        data_type: number
+        description: ""
+
+      - name: status_id
+        data_type: number
+        description: ""
+
       - name: date_deleted
+        data_type: boolean
+        description: ""
+
       - name: date_load
+        data_type: timestamp_tz
+        description: ""
 
   - name: stg_sql_server__users
+    description: ""
     columns:
       - name: user_id
-      - name: updated_at
-      - name: address_id
-      - name: last_name
-      - name: created_at
-      - name: phone_number
-      - name: total_orders
+        data_type: varchar
+        description: ""
+
       - name: first_name
+        data_type: varchar
+        description: ""
+
+      - name: last_name
+        data_type: varchar
+        description: ""
+
+      - name: phone_number
+        data_type: varchar
+        description: ""
+
       - name: email
+        data_type: varchar
+        description: ""
+
+      - name: total_orders
+        data_type: number
+        description: ""
+
+      - name: address_id
+        data_type: varchar
+        description: ""
+
+      - name: updated_at_utc
+        data_type: timestamp_tz
+        description: ""
+
+      - name: created_at_utc
+        data_type: timestamp_tz
+        description: ""
+
       - name: date_deleted
+        data_type: boolean
+        description: ""
+
       - name: date_load
+        data_type: timestamp_tz
+        description: ""
+
+  - name: stg_sql_server__tracking
+    description: ""
+    columns:
+      - name: tracking_id
+        data_type: varchar
+        description: ""
+
+      - name: shipping_service
+        data_type: varchar
+        description: ""
+        tests:
+          - accepted_values:
+              values: ["ups", "usps", "fedex", "dhl"]
+
+      - name: delivered_at_utc
+        data_type: timestamp_tz
+        description: ""
+
+      - name: estimated_delivery_at_utc
+        data_type: timestamp_tz
+        description: ""
+
+  - name: stg_sql_server__status
+    description: ""
+    columns:
+      - name: status_id
+        data_type: number
+        description: ""
+
+      - name: status
+        data_type: varchar
+        description: ""
