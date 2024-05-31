@@ -9,6 +9,7 @@ renamed_casted AS (
         convert_timezone('UTC',created_at)::date as created_at_utc,
         user_id,
         address_id,
+        tracking_id,
         order_total as order_total_dollars,
         order_cost as order_cost_dollars,
         shipping_cost as shipping_cost_dollars,

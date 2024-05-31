@@ -16,7 +16,7 @@ final AS (
         {{dbt_utils.generate_surrogate_key(['promo_id'])}} as promo_key,
         {{dbt_utils.generate_surrogate_key(['created_at_utc'])}} as time_key, 
         {{dbt_utils.generate_surrogate_key(['user_id'])}} as user_key,
-        created_at_utc::date,
+        created_at_utc::date as created_at_utc,
         order_cost_dollars,
         order_total_dollars,
         shipping_cost_dollars
