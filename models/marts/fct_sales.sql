@@ -19,7 +19,8 @@ final AS (
         created_at_utc::date as created_at_utc,
         order_cost_dollars,
         order_total_dollars,
-        shipping_cost_dollars
+        shipping_cost_dollars,
+        quantity as producs_quantity
     FROM orders a 
     JOIN products b 
     ON a.order_id = b.order_id
