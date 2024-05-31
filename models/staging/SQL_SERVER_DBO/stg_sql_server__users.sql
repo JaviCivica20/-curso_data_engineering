@@ -4,9 +4,9 @@ WITH src_users AS (
     ),
 
 user_orders AS (
-    SELECT  
+    SELECT
         user_id,
-        count(*) as total_orders
+        count(*) as total_orders  
     FROM {{ ref('base_sql_server__orders') }}
     GROUP BY user_id
 ),
@@ -18,7 +18,7 @@ renamed_casted AS (
           last_name,
           phone_number,
           email,
-          coalesce(b.total_orders, 0),
+          coalesce(b.total_orders, 0) as total_orders,
           address_id,
           --coalesce (regexp_like(email, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')= true,false) as is_valid_email_address,
           convert_timezone('UTC',updated_at)::date as updated_at_utc,

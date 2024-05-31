@@ -1,11 +1,11 @@
 WITH src_events AS (
     SELECT * 
-    FROM {{ ref('stg_sql_server__events') }}
+    FROM {{ ref('base_sql_server__events') }}
     ),
 
 type AS (
     SELECT DISTINCT
-     event_type_id,
+     md5(event_type),
      event_type
      FROM src_events
 )

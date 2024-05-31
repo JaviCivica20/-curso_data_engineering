@@ -1,6 +1,6 @@
 WITH src_orders AS (
     SELECT status 
-    FROM {{ref("stg_sql_server__orders")}}
+    FROM {{ref("base_sql_server__orders")}}
     ), 
 
 status as (

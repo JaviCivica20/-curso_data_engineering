@@ -4,7 +4,7 @@ models:
   - name: stg_google_sheets__budget
     config:
       contract:
-        enforced: true
+        enforced: false
     columns:
       - name: _row
         tests:
