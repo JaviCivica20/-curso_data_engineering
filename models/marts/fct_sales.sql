@@ -12,7 +12,7 @@ products AS (
 final AS (
     SELECT
         {{dbt_utils.generate_surrogate_key(['a.order_id', 'product_id'])}} as sales_key,
-        {{dbt_utils.generate_surrogate_key(['a.address_id'])}} as address_key,
+        {{dbt_utils.generate_surrogate_key(['address_id'])}} as address_key,
         {{dbt_utils.generate_surrogate_key(['product_id'])}} as product_key,
         {{dbt_utils.generate_surrogate_key(['promo_id'])}} as promo_key,
         {{dbt_utils.generate_surrogate_key(['created_at_utc'])}} as time_key, -- Mirar esto
