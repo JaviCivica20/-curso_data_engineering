@@ -17,6 +17,7 @@ renamed_casted AS (
             WHEN status LIKE 'shipped' then 1
             WHEN status LIKE 'delivered' then 2
         END AS status_id,
+        status,
         CASE
             WHEN promo_id = '' THEN md5('no promo')
             ELSE md5(promo_id)
