@@ -22,7 +22,7 @@ renamed_casted AS (
             ELSE md5(promo_id)
         END AS promo_id,
         coalesce(_fivetran_deleted, false) AS date_deleted,
-        convert_timezone('UTC', _fivetran_synced) AS date_load
+        convert_timezone('UTC', _fivetran_synced)::date AS date_load
     FROM src_orders
 )
 

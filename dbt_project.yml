@@ -40,5 +40,5 @@ models:
     staging:
       +materialized: view
     marts:
-      +database: ALUMNO20_DEVGOLD_DB
+      +database: ALUMNO20DEV_GOLD_DB
       +materialized: table
