@@ -5,10 +5,10 @@ WITH products AS (
 
 final AS (
     SELECT
+        {{dbt_utils.generate_surrogate_key(['product_id'])}} as product_key,
         product_id,
         price_dollars,
         name
-        --inventory
     FROM products
 )
 

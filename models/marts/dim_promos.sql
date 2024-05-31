@@ -5,6 +5,7 @@ WITH promos AS (
 
 final AS (
     SELECT
+        {{dbt_utils.generate_surrogate_key(['promo_id'])}} as promo_key,
         promo_id,
         promo_name,
         discount_dollars,

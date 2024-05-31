@@ -3,77 +3,26 @@ WITH orders AS (
     FROM {{ref('stg_sql_server__orders')}}
 ),
 
-addresses AS (
-    SELECT 
-        address_id
-    FROM {{ref('dim_addresses')}}
-),
-
 products AS (
-    SELECT 
-        product_id
-    FROM {{ref('dim_products')}}
-),
-
-promos AS (
-    SELECT 
-        promo_id
-    FROM {{ref('dim_promos')}}
-),
-
-users AS (
-    SELECT 
-        user_id
-    FROM {{ref('dim_users')}}
-),
-
-time AS (
-    SELECT 
-        time_id
-    FROM {{ref('dim_time')}}
-),
-
-order_items AS (
-    SELECT
-        quantity
+    SELECT * 
     FROM {{ref('stg_sql_server__order_items')}}
 ),
 
-joined_data AS (
-    SELECT
-        b.quantity,
-        b.product_id,
-        a.order_cost,
-        a.order_total,
-        a.shipping_cost
-    FROM orders a 
-    LEFT JOIN order_items b 
-    ON a.product_id = b.product_id
-),
 
 final AS (
     SELECT
-        user_id,
-        address_id,
-        product_id,
-        promo_id,
-        time_id,
-        quantity,
-        order_cost,
-        order_total,
-        shipping_cost
-    FROM joined_data jd
-    LEFT JOIN
-    {{ ref('dim_products') }} dp ON jd.PRODUCT_ID = dp.PRODUCT_ID
-    LEFT JOIN
-    {{ ref('dim_users') }} du ON jd.USER_ID = du.USER_ID
-    LEFT JOIN
-    {{ ref('dim_addresses') }} da ON jd.ADDRESS_ID = da.ADDRESS_ID
-    LEFT JOIN
-    {{ ref('dim_promos') }} dpromo ON jd.PROMO_ID = dpromo.PROMO_ID
-    LEFT JOIN
-    {{ ref('dim_time') }} dt ON jd.CREATED_AT::DATE = dt.date 
-
+        {{dbt_utils.generate_surrogate_key(['a.order_id', 'product_id'])}} as sales_key,
+        {{dbt_utils.generate_surrogate_key(['a.address_id'])}} as address_key,
+        {{dbt_utils.generate_surrogate_key(['product_id'])}} as product_key,
+        {{dbt_utils.generate_surrogate_key(['promo_id'])}} as promo_key,
+        {{dbt_utils.generate_surrogate_key(['created_at_utc'])}} as time_key, -- Mirar esto
+        {{dbt_utils.generate_surrogate_key(['user_id'])}} as user_key,
+        order_cost_dollars,
+        order_total_dollars,
+        shipping_cost_dollars
+    FROM orders a 
+    JOIN products b 
+    ON a.order_id = b.order_id
 )
 
 SELECT * FROM final

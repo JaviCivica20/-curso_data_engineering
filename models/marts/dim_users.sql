@@ -5,6 +5,7 @@ WITH users AS (
 
 final AS (
     SELECT
+        {{dbt_utils.generate_surrogate_key(['user_id'])}} as user_key,
         user_id,
         first_name,
         last_name,

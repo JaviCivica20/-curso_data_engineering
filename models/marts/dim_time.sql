@@ -7,14 +7,15 @@ WITH dates AS (
 
 final AS (
 select
-     date as time_id
-    ,extract(year from date) as year
-    ,extract(month from date) as month
-    ,monthname(date) as month_name
-    ,extract(day from date) as day
-    ,extract(dayofweek from date) as number_week_day
-    ,dayname(date) as week_day
-    ,extract(quarter from date) as quarter
+    {{dbt_utils.generate_surrogate_key(['date'])}} as time_key,
+    date as time_id,
+    extract(year from date) as year,
+    extract(month from date) as month,
+    monthname(date) as month_name,
+    extract(day from date) as day,
+    extract(dayofweek from date) as number_week_day,
+    dayname(date) as week_day,
+    extract(quarter from date) as quarter
 from dates
 )
 
