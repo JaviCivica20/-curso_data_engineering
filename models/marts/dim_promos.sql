@@ -9,7 +9,7 @@ final AS (
         promo_id,
         promo_name,
         discount_dollars,
-        status_id AS status
+        --status_id AS status
     FROM promos
 )
 

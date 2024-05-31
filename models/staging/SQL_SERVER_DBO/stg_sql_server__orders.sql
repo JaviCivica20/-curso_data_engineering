@@ -6,7 +6,7 @@ WITH src_orders AS (
 renamed_casted AS (
     SELECT
         order_id,
-        convert_timezone('UTC',created_at) as created_at_utc,
+        convert_timezone('UTC',created_at)::date as created_at_utc,
         user_id,
         address_id,
         order_total as order_total_dollars,

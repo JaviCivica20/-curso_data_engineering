@@ -1,13 +1,14 @@
 WITH dates AS (
     SELECT
-        DATEADD(day, SEQ4(), '2020-01-01') AS date
+        DATEADD(day, SEQ4(), '2021-01-01') AS date
     FROM
-        TABLE(GENERATOR(ROWCOUNT => 2000)) 
+        TABLE(GENERATOR(ROWCOUNT => 500)) 
 ),
 
 final AS (
 select
-    {{dbt_utils.generate_surrogate_key(['date'])}} as time_key,
+    --md5(date) as time_key,
+    {{dbt_utils.generate_surrogate_key(['date::date'])}} as time_key,
     date::date as date,
     extract(year from date) as year,
     extract(month from date) as month,

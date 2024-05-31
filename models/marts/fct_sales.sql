@@ -23,8 +23,7 @@ final AS (
     FROM orders a 
     JOIN products b 
     ON a.order_id = b.order_id
-   -- WHERE a.created_at_utc = c.time_id
-    
+      
 )
 
 SELECT * FROM final
