@@ -1,8 +1,8 @@
 WITH dates AS (
     SELECT
-        DATEADD(day, SEQ4(), '2024-01-01') AS date
+        DATEADD(day, SEQ4(), '2020-01-01') AS date
     FROM
-        TABLE(GENERATOR(ROWCOUNT => 50)) 
+        TABLE(GENERATOR(ROWCOUNT => 2000)) 
 ),
 
 final AS (
@@ -16,7 +16,8 @@ select
     extract(dayofweek from date) as number_week_day,
     dayname(date) as week_day,
     extract(quarter from date) as quarter
-from dates
+from dates 
+
 )
 
 SELECT * FROM final
