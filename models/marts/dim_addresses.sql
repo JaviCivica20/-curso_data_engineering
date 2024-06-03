@@ -5,8 +5,7 @@ WITH addresses AS (
 
 final AS (
     SELECT
-        {{dbt_utils.generate_surrogate_key(['address_id'])}} as address_key,
-        address_id,
+        {{dbt_utils.generate_surrogate_key(['address_id'])}} as address_id,
         zipcode,
         country,
         address,

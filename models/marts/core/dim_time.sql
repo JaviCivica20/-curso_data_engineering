@@ -7,8 +7,7 @@ WITH dates AS (
 
 final AS (
 select
-    --md5(date) as time_key,
-    {{dbt_utils.generate_surrogate_key(['date::date'])}} as time_key,
+    {{dbt_utils.generate_surrogate_key(['date::date'])}} as time_id,
     date::date as date,
     extract(year from date) as year,
     extract(month from date) as month,

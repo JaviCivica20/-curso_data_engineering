@@ -10,7 +10,7 @@ renamed_casted AS (
           page_url,
           md5(event_type) as event_type_id,
           user_id,
-          NULLIF( product_id , '' ) AS product_id ,
+          NULLIF(product_id , '' ) AS product_id ,
           session_id,
           convert_timezone('UTC', created_at)::date created_at_utc,
           NULLIF(order_id, '') AS order_id,
