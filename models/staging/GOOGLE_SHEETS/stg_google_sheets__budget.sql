@@ -1,8 +1,8 @@
-{{ config(
+/*{{ config(
     materialized='incremental',
     unique_key = 'budget_id'
     ) 
-    }}
+    }}*/
 
 WITH src_budget AS (
     SELECT * 
@@ -11,7 +11,7 @@ WITH src_budget AS (
 
 renamed_casted AS (
     SELECT
-          {{dbt_utils.generate_surrogate_key(['_row'])}} as budget_id,
+         _row,
          product_id
         , quantity
         , extract(month from month) as month
@@ -21,8 +21,8 @@ renamed_casted AS (
 
 SELECT * FROM renamed_casted
 
-{% if is_incremental() %}
+/*{% if is_incremental() %}
 
 	  WHERE date_load > (SELECT MAX(date_load) FROM {{ this }} )
 
-{% endif %}
+{% endif %}*/
