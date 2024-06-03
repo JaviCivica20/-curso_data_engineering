@@ -3,7 +3,7 @@ WITH orders AS (
     FROM {{ref('stg_sql_server__orders')}}
 ),
 
-products AS (
+order_items AS (
     SELECT * 
     FROM {{ref('stg_sql_server__order_items')}}
 ),
@@ -20,11 +20,10 @@ final AS (
         order_cost_dollars,
         order_total_dollars,
         shipping_cost_dollars,
-        quantity as producs_quantity
+        --SUM(quantity) OVER(PARTITION BY product_id) as products_total
     FROM orders a 
-    JOIN products b 
-    ON a.order_id = b.order_id
-      
+    JOIN order_items b 
+    ON a.order_id = b.order_id   
 )
 
 SELECT * FROM final
