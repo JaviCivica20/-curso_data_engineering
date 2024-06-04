@@ -25,9 +25,14 @@ final AS (
         os.order_id,
         os.product_id,
         o.address_id,
+        o.user_id,
+        o.created_at_utc,
         os.total_quantity,
         p.price_dollars,
-        p.price_dollars * os.total_quantity AS total_price_per_product
+        p.price_dollars * os.total_quantity AS total_price_per_product,
+        o.order_total_dollars,
+        o.order_cost_dollars,
+        o.shipping_cost_dollars
         --a.total_quantity
         --a.shipping_cost_dollars/total_quantity AS shipping_cost_per_product
     FROM orders o 
