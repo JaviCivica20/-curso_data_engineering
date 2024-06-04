@@ -7,3 +7,6 @@ packages:
 
   - package: calogica/dbt_expectations
     version: 0.10.3
+  
+  - package: dbt-labs/dbt_project_evaluator
+    version: 0.11.0

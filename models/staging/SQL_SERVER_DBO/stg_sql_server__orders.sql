@@ -19,8 +19,8 @@ renamed_casted AS (
             WHEN status LIKE 'delivered' then 2
         END AS status_id,
         CASE
-            WHEN promo_id = '' THEN md5('no promo')
-            ELSE md5(promo_id)
+            WHEN promo_id = '' THEN {{dbt_utils.generate_surrogate_key(["'no promo'"])}}
+            ELSE {{dbt_utils.generate_surrogate_key(['promo_id'])}}
         END AS promo_id,
         coalesce(_fivetran_deleted, false) AS date_deleted,
         convert_timezone('UTC', _fivetran_synced)::date AS date_load
