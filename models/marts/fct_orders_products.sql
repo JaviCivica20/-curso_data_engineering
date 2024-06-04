@@ -13,8 +13,20 @@ products AS (
 ),
 
 orders AS (
-    SELECT *
-    FROM {{ ref('stg_sql_server__orders') }}
+    SELECT 
+        user_id,
+        order_id,
+        address_id,
+        promo_id,
+        created_at_utc,
+        status_id,
+        order_total_dollars,
+        order_cost_dollars,
+        shipping_cost_dollars,
+        t.shipping_service_id
+    FROM {{ ref('stg_sql_server__orders') }} o
+    JOIN {{ ref('stg_sql_server__tracking') }} t
+    ON o.tracking_id = t.tracking_id
 ),
 
 final AS (
@@ -25,9 +37,11 @@ final AS (
         o.user_id,
         o.promo_id,
         {{dbt_utils.generate_surrogate_key(['o.created_at_utc'])}} AS time_id,
+        o.shipping_service_id,
         oi.product_id,
+        o.status_id AS shipping_status_id,
         oi.total_quantity,
-        p.price_dollars * oi.total_quantity AS total_price_per_product,
+        ROUND(p.price_dollars * oi.total_quantity, 2) AS total_price_per_product,
         o.order_total_dollars,
         o.order_cost_dollars,
         o.shipping_cost_dollars,
