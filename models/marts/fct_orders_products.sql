@@ -33,7 +33,6 @@ final AS (
         o.order_total_dollars,
         o.order_cost_dollars,
         o.shipping_cost_dollars
-        --a.total_quantity
         --a.shipping_cost_dollars/total_quantity AS shipping_cost_per_product
     FROM orders o 
     JOIN order_summary os
