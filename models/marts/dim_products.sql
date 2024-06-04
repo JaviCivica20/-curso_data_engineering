@@ -5,7 +5,7 @@ WITH products AS (
 
 final AS (
     SELECT
-        {{dbt_utils.generate_surrogate_key(['product_id'])}} as product_id,
+        product_id,
         name,
         price_dollars
     FROM products

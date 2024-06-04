@@ -12,9 +12,7 @@ events_sum AS (
 
 joined AS (
     SELECT DISTINCT
-        --{{dbt_utils.generate_surrogate_key(['f.event_id', 'f.user_id'])}} as event_id,
-        {{dbt_utils.generate_surrogate_key(['a.user_id'])}} as user_id,
-        --{{dbt_utils.generate_surrogate_key(['a.session_id'])}} as session_id,
+        a.user_id,
         {{dbt_utils.generate_surrogate_key(['MIN(a.created_at) OVER (PARTITION BY a.user_id)::date'])}} AS first_event,
         {{dbt_utils.generate_surrogate_key(['MAX(a.created_at) OVER (PARTITION BY a.user_id)::date'])}} AS last_event,
         COUNT(DISTINCT a.session_id)OVER(PARTITION BY a.user_id) AS sessions,
