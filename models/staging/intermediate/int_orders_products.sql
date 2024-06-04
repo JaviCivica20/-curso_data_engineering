@@ -17,7 +17,7 @@ final AS (
     SELECT
         b.order_id,
         b.product_id,
-        c.name,
+        --c.name,
         b.quantity,
         c.price_dollars,
         c.price_dollars * b.quantity AS total_price,
