@@ -16,6 +16,7 @@ joined AS (
         {{dbt_utils.generate_surrogate_key(['MIN(a.created_at) OVER (PARTITION BY a.user_id)::date'])}} AS first_event,
         {{dbt_utils.generate_surrogate_key(['MAX(a.created_at) OVER (PARTITION BY a.user_id)::date'])}} AS last_event,
         COUNT(DISTINCT a.session_id)OVER(PARTITION BY a.user_id) AS sessions,
+        --DATEDIFF(minute, MAX(first_event), MIN(first_event)) AS DateDiff,
         b.checkout_amount,
         b.package_shipped_amount,
         b.add_to_cart_amount,
