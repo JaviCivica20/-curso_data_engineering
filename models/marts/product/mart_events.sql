@@ -16,13 +16,15 @@ users AS (
 ),
 
 joined AS (
-    SELECT DISTINCT
+    SELECT
+        a.session_id,
         a.user_id,
-        MIN(a.created_at_utc) AS first_event,
-        MAX(a.created_at_utc) AS last_event,
-        COUNT(DISTINCT a.session_id) AS sessions,
+        u.first_name,
+        u.email,
+        MIN(a.created_at_utc) AS begin_session,
+        MAX(a.created_at_utc) AS end_session,
         COUNT(a.page_url) AS pages_views,
-        DATEDIFF(minute, MIN(a.created_at_utc), MAX(a.created_at_utc)) AS total_sessions_minutes,
+        DATEDIFF(minute, MIN(a.created_at_utc), MAX(a.created_at_utc)) AS session_minutes,
         b.checkout_amount,
         b.package_shipped_amount,
         b.add_to_cart_amount,
@@ -32,8 +34,7 @@ joined AS (
     ON u.user_id = a.user_id
     JOIN events_sum b
     ON u.user_id = b.user_id
-    GROUP BY a.user_id, b.checkout_amount, b.package_shipped_amount, b.add_to_cart_amount, b.page_view_amount
-    ORDER BY sessions DESC
+    GROUP BY ALL
 )
 
 SELECT * FROM joined

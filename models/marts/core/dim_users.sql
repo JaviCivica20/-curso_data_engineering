@@ -9,7 +9,9 @@ final AS (
         first_name,
         last_name,
         phone_number,
-        email
+        email,
+        updated_at_utc,
+        created_at_utc
     FROM users
 )
 
