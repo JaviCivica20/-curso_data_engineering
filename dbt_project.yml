@@ -35,10 +35,29 @@ clean-targets:         # directories to be removed by `dbt clean`
 # continue to be built as views. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
+
 models:
+  +transient: false
   curso_data_eng:
+    # Applies to all files under models/example/
+
     staging:
       +materialized: view
+      +database: "{{ env_var('DBT_ENVIRONMENTS') }}SILVER_DB"
+      google_sheets:
+        +schema: google_sheets
+      sql_server_dbo:
+        +schema: sql_server_dbo
+      
     marts:
-      +database: ALUMNO20DEV_GOLD_DB
       +materialized: table
+      +database: "{{ env_var('DBT_ENVIRONMENTS') }}_GOLD_DB"
+      core:
+        +schema: core
+seeds:
+  +schema: seed_data
+  +database: "{{ env_var('DBT_ENVIRONMENTS') }}BRONZEDB"        
+snapshots:
+  +transient: false
+  +target_database: "{{ env_var('DBT_ENVIRONMENTS') }}SILVER_DB"
+  +target_schema: snapshots
