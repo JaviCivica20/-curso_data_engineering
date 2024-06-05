@@ -24,7 +24,7 @@ final AS (
         o.address_id,
         o.user_id,
         o.promo_id,
-        {{dbt_utils.generate_surrogate_key(['o.created_at_utc'])}} AS time_id,
+        o.created_at_utc,
         o.shipping_service_id,
         o.tracking_id,
         oi.product_id,
@@ -34,7 +34,7 @@ final AS (
         o.order_total_dollars/pr AS order_total,
         o.order_cost_dollars/pr AS order_cost,
         o.shipping_cost_dollars/pr AS shipping_cost,
-        --(order_total - (shipping_cost + order_cost))/pr AS discount
+        ROUND(((o.order_total_dollars - (o.shipping_cost_dollars + o.order_cost_dollars))/pr),2) AS discount
     FROM orders o 
     LEFT JOIN order_items oi
     ON o.order_id = oi.order_id
