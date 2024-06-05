@@ -45,7 +45,7 @@ final AS (
         o.status_id AS shipping_status_id,
         oi.quantity,
         --SUM(oi.total_quantity)OVER(PARTITION BY oi.product_id) AS total_quantity_per_order,
-        ROUND(p.price_dollars * oi.total_quantity, 2) AS total_price_per_product,
+        ROUND(p.price_dollars * oi.quantity, 2) AS total_price_per_product,
         o.order_total_dollars AS order_total,
         o.order_cost_dollars AS order_cost,
         o.shipping_cost_dollars AS shipping_cost,
