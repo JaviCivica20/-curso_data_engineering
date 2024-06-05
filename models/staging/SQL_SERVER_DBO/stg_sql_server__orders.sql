@@ -9,7 +9,10 @@ renamed_casted AS (
         convert_timezone('UTC',created_at)::date as created_at_utc,
         user_id,
         address_id,
-        tracking_id,
+        NULLIF(tracking_id, '') AS tracking_id,
+        CASE WHEN shipping_service LIKE '' THEN NULL
+        ELSE {{dbt_utils.generate_surrogate_key(['shipping_service'])}}
+        END AS shipping_service_id,
         order_total as order_total_dollars,
         order_cost as order_cost_dollars,
         shipping_cost as shipping_cost_dollars,
@@ -18,6 +21,8 @@ renamed_casted AS (
             WHEN status LIKE 'shipped' then 1
             WHEN status LIKE 'delivered' then 2
         END AS status_id,
+        convert_timezone('UTC', delivered_at)::date as delivered_at_utc,
+        convert_timezone('UTC', estimated_delivery_at)::date as estimated_delivery_at_utc,
         CASE
             WHEN promo_id = '' THEN {{dbt_utils.generate_surrogate_key(["'no promo'"])}}
             ELSE {{dbt_utils.generate_surrogate_key(['promo_id'])}}

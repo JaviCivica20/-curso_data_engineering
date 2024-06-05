@@ -12,7 +12,7 @@ renamed_casted AS (
           user_id,
           NULLIF(product_id , '' ) AS product_id ,
           session_id,
-          convert_timezone('UTC', created_at)::date created_at_utc,
+          convert_timezone('UTC', created_at) created_at_utc,
           NULLIF(order_id, '') AS order_id,
           coalesce(_fivetran_deleted, false) AS date_deleted,
           convert_timezone('UTC',_fivetran_synced) AS date_load

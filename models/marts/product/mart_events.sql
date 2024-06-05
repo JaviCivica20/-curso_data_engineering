@@ -1,7 +1,7 @@
 
 WITH events AS (
     SELECT * 
-    FROM {{ref('base_sql_server__events')}}
+    FROM {{ref('stg_sql_server__events')}}
 ),
 
 events_sum AS (
@@ -13,8 +13,8 @@ events_sum AS (
 joined AS (
     SELECT DISTINCT
         a.user_id,
-        {{dbt_utils.generate_surrogate_key(['MIN(a.created_at) OVER (PARTITION BY a.user_id)::date'])}} AS first_event,
-        {{dbt_utils.generate_surrogate_key(['MAX(a.created_at) OVER (PARTITION BY a.user_id)::date'])}} AS last_event,
+        MIN(a.created_at) OVER (PARTITION BY a.user_id) AS first_event,
+        MAX(a.created_at) OVER (PARTITION BY a.user_id) AS last_event,
         COUNT(DISTINCT a.session_id)OVER(PARTITION BY a.user_id) AS sessions,
         --DATEDIFF(minute, MAX(first_event), MIN(first_event)) AS DateDiff,
         b.checkout_amount,
