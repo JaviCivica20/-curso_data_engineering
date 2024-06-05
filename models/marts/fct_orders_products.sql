@@ -2,9 +2,12 @@ WITH order_items AS (
     SELECT
         order_id,
         product_id,
-        sum(quantity) as total_quantity
+        quantity,
+        products_per_order,
+        --products_per_order,
+        --sum(quantity) as total_quantity
     FROM {{ ref('stg_sql_server__order_items') }}
-    GROUP BY order_id, product_id
+    --GROUP BY order_id, product_id
 ),
 
 products AS (
@@ -25,7 +28,7 @@ orders AS (
         shipping_cost_dollars,
         t.shipping_service_id
     FROM {{ ref('stg_sql_server__orders') }} o
-    JOIN {{ ref('stg_sql_server__tracking') }} t
+    LEFT JOIN {{ ref('stg_sql_server__tracking') }} t
     ON o.tracking_id = t.tracking_id
 ),
 
@@ -40,12 +43,13 @@ final AS (
         o.shipping_service_id,
         oi.product_id,
         o.status_id AS shipping_status_id,
-        oi.total_quantity,
+        oi.quantity,
+        --SUM(oi.total_quantity)OVER(PARTITION BY oi.product_id) AS total_quantity_per_order,
         ROUND(p.price_dollars * oi.total_quantity, 2) AS total_price_per_product,
-        o.order_total_dollars,
-        o.order_cost_dollars,
-        o.shipping_cost_dollars,
-        (o.order_total_dollars - (o.shipping_cost_dollars + o.order_cost_dollars))::int AS discount
+        o.order_total_dollars AS order_total,
+        o.order_cost_dollars AS order_cost,
+        o.shipping_cost_dollars AS shipping_cost,
+        ((o.order_total_dollars - (o.shipping_cost_dollars + o.order_cost_dollars))::int) AS discount
     FROM orders o 
     JOIN order_items oi
     ON o.order_id = oi.order_id
