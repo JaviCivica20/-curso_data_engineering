@@ -12,7 +12,7 @@ WITH order_items AS (
 budget AS (
     SELECT
         product_id,
-        month,
+        extract(month from month) AS month,
         sum(quantity) AS budget_total_products
     FROM {{ ref('stg_google_sheets__budget') }}
     GROUP BY product_id, month

@@ -18,7 +18,7 @@ final AS (
         order_cost_dollars,
         order_total_dollars,
         shipping_cost_dollars,
-        order_total_dollars - (shipping_cost_dollars + order_cost_dollars) AS discount
+        (order_total_dollars - (shipping_cost_dollars + order_cost_dollars))::INT AS discount
     FROM orders a 
     JOIN order_items b 
     ON a.order_id = b.order_id   

@@ -9,7 +9,7 @@ renamed_casted AS (
          _row,
          product_id,
         quantity,
-        extract(month from month) as month,
+        month,
         convert_timezone('UTC',_fivetran_synced) AS date_load
     FROM src_budget
     )
