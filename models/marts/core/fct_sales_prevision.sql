@@ -1,26 +1,29 @@
 WITH order_items AS (
     SELECT 
         product_id,
+        extract(year from o.created_at_utc) AS year,
         extract(month from o.created_at_utc) AS month,
         sum(quantity) as products_total_sales
     FROM {{ref('stg_sql_server__order_items')}} oi
     JOIN {{ref('stg_sql_server__orders')}} o
     ON oi.order_id = o.order_id
-    GROUP BY product_id, month
+    GROUP BY product_id, month, year
 ),
 
 budget AS (
     SELECT
         product_id,
+        extract(year from month) AS year,
         extract(month from month) AS month,
         sum(quantity) AS budget_total_products
     FROM {{ ref('stg_google_sheets__budget') }}
-    GROUP BY product_id, month
+    GROUP BY product_id, month, year
  ),
 
 final AS (
     SELECT
         b.product_id,
+        b.year,
         b.month,
         b.budget_total_products,
 

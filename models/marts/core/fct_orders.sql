@@ -15,6 +15,8 @@ final AS (
         promo_id,
         user_id,
         created_at_utc,
+        estimated_delivery_at_utc,
+        delivered_at_utc,
         order_cost_dollars,
         order_total_dollars,
         shipping_cost_dollars,
