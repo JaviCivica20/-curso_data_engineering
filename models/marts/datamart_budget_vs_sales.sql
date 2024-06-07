@@ -4,7 +4,6 @@ WITH stg_budget AS (
         product_id,
         quantity
     FROM {{ref('fct_budget')}} 
-    --GROUP BY 1,2
 ),
 
 fct_orders_products AS (
