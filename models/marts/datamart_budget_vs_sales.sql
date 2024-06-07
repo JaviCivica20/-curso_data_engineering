@@ -3,7 +3,7 @@ WITH stg_budget AS (
         LEFT(month,7) AS date,
         product_id,
         sum(quantity) AS budget_quantity
-    FROM {{ref('stg_google_sheets__budget')}} 
+    FROM {{ref('fct_budget')}} 
     GROUP BY 1,2
 ),
 
