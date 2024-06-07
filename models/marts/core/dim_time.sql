@@ -11,6 +11,7 @@ select
     date::date as date,
     extract(year from date) as year,
     extract(month from date) as month,
+    LEFT(date,7) as year_month,
     monthname(date) as month_name,
     extract(day from date) as day,
     extract(dayofweek from date) as number_week_day,
