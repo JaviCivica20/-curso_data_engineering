@@ -1,31 +1,33 @@
-WITH stg_budget AS (
+WITH fct_budget AS (
     SELECT 
-        LEFT(month,7) AS date,
+        year_month,
         product_id,
-        quantity
-    FROM {{ref('fct_budget')}} 
+        sum(quantity) as budget_quantity
+    FROM {{ref('fct_budget')}} b
+    JOIN {{ref('dim_time')}} t
+    ON b.month = t.date
+    GROUP BY 1,2
 ),
 
 fct_orders_products AS (
     SELECT
-        LEFT(created_at_utc,7) AS created_at,
+        year_month,
         product_id,
         sum(product_quantity) AS sales_quantity
-    FROM {{ref('fct_orders_products')}}
+    FROM {{ref('fct_orders_products')}} o 
+    JOIN {{ref('dim_time')}} t
+    ON o.created_at_utc = t.date
     GROUP BY 1,2
 ),
 
 joined AS (
     SELECT
-        b.date,
+        b.year_month,
         b.product_id, 
-        quantity AS sales_prevision,
+        budget_quantity,
         sales_quantity,
-        sales_quantity - quantity AS prevision_difference
+        sales_quantity - budget_quantity AS prevision_difference
     FROM stg_budget b 
-    LEFT JOIN fct_orders_products op ON b.product_id = op.product_id AND b.date = op.created_at
-    ORDER BY b.date
-
+    LEFT JOIN fct_orders_products op ON b.product_id = op.product_id AND b.year_month = op.year_month
 )
-
-SELECT * FROM joined
+SELECT * FROM joined ORDER BY 1,2
